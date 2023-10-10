@@ -47,39 +47,38 @@ const pizzas = [
 ];
 
 
-const pizzaSeleccionada = document.getElementById('selectedPizza') //input
-const error = document.getElementById('errorContainer')//span error
-const selectPizza = document.getElementById('selectPizza') //boton
-const contenedorRender = document.querySelector('.renderContainer')// contenedor de pizza
+const pizzaSeleccionada = document.getElementById('selectedPizza') //el INPUT
+const error = document.getElementById('errorContainer')//span de ERROR
+const selectPizza = document.getElementById('selectPizza') //BOTON
+const renderCard = document.querySelector('.renderContainer')// DIV para renderizar la CARD
 
-/* console.log(contenedorRender) */
+//Mostrar Errores
+const elError = (verificacion) => {
+  valid = true
 
-const hasError = (variableAVerificar) => {
-  isValid = true
-
-  if (!variableAVerificar.length) {
-    error.innerHTML = "El input esta vacio"
+  if (!verificacion.length) {
+    error.innerHTML = "Input vacio, ingresar un número válido"
     return
-  } else if (variableAVerificar > pizzas.length || variableAVerificar < 1) {
-    error.innerHTML = "La pizza seleccionada no existe"
+  } else if (verificacion > pizzas.length || verificacion < 1) {
+    error.innerHTML = "La pizza elegida no existe"
     return
   }
 
-  return isValid
+  return valid
 }
 
+//Se crea la CARD
 const renderizarPizza = (pizzaSeleccionada) => {
   const { nombre, ingredientes, precio, imagen } = pizzaSeleccionada
 
-  return contenedorRender.innerHTML =
+  return renderCard.innerHTML =
 `<div class="card">
     <img src="${imagen}" alt="" srcset="">
     <h2>${nombre.toUpperCase()}</h2>
-    <p>${ingredientes.join(' , ')}</p>
+    <p class="typeofpizza">${ingredientes.join(', ')}</p>
     <p class="price">$ ${precio}</p>    
 </div>
 `
-
 }
 
 const saveLS = (selection) => {
@@ -93,9 +92,9 @@ const filterPizza = (pizzasArray, pizzaSelected) => {
 
 const seleccionarPizza = () => {
     const valorPizza = pizzaSeleccionada.value
-  contenedorRender.innerHTML = ""
+  renderCard.innerHTML = ""
 
-  if (hasError(valorPizza)) {
+  if (elError(valorPizza)) {
     error.innerHTML = ""
     saveLS(valorPizza)
     const pizzaFiltrada = filterPizza(pizzas,valorPizza)
@@ -112,6 +111,7 @@ const pizzaGuardada = () => {
     }
 }
 
+//Iniciliza los Eventos
 const init = () => {
   pizzaSeleccionada.addEventListener('submit',(e) => {e.preventDefault})
   document.addEventListener("DOMContentLoaded", pizzaGuardada)

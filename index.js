@@ -52,7 +52,7 @@ const error = document.getElementById('errorContainer')//span de ERROR
 const selectPizza = document.getElementById('selectPizza') //BOTON
 const renderCard = document.querySelector('.renderContainer')// DIV para renderizar la CARD
 
-//Mostrar Errores
+//Errores
 const elError = (verificacion) => {
   valid = true
 
@@ -72,7 +72,7 @@ const renderizarPizza = (pizzaSeleccionada) => {
   const { nombre, ingredientes, precio, imagen } = pizzaSeleccionada
 
   return renderCard.innerHTML =
-`<div class="card">
+    `<div class="card">
     <img src="${imagen}" alt="" srcset="">
     <h2>${nombre.toUpperCase()}</h2>
     <p class="typeofpizza">${ingredientes.join(', ')}</p>
@@ -91,31 +91,31 @@ const filterPizza = (pizzasArray, pizzaSelected) => {
 }
 
 const seleccionarPizza = () => {
-    const valorPizza = pizzaSeleccionada.value
+  const valorPizza = pizzaSeleccionada.value
   renderCard.innerHTML = ""
 
   if (elError(valorPizza)) {
     error.innerHTML = ""
     saveLS(valorPizza)
-    const pizzaFiltrada = filterPizza(pizzas,valorPizza)
+    const pizzaFiltrada = filterPizza(pizzas, valorPizza)
     renderizarPizza(pizzaFiltrada)
   }
 
 }
 
 const pizzaGuardada = () => {
-      const pizzaPorDefecto = JSON.parse(localStorage.getItem('pizzaGuardada'))
-    if (pizzaPorDefecto) {
-      const pizzaFiltrada = filterPizza(pizzas, pizzaPorDefecto)
-     renderizarPizza(pizzaFiltrada)
-    }
+  const pizzaPorDefecto = JSON.parse(localStorage.getItem('pizzaGuardada'))
+  if (pizzaPorDefecto) {
+    const pizzaFiltrada = filterPizza(pizzas, pizzaPorDefecto)
+    renderizarPizza(pizzaFiltrada)
+  }
 }
 
 //Iniciliza los Eventos
 const init = () => {
-  pizzaSeleccionada.addEventListener('submit',(e) => {e.preventDefault})
+  pizzaSeleccionada.addEventListener('submit', (e) => { e.preventDefault })
   document.addEventListener("DOMContentLoaded", pizzaGuardada)
   selectPizza.addEventListener('click', seleccionarPizza)
-  
+
 }
 init()
